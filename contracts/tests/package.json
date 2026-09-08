@@ -1,0 +1,22 @@
+{
+  "name": "magiclob-anchor-tests",
+  "private": true,
+  "scripts": {
+    "test": "node --import tsx node_modules/mocha/bin/mocha -t 1000000 ./*.test.ts"
+  },
+  "dependencies": {
+    "@solana/spl-token": "^0.4.15",
+    "@solana/surfpool": "^1.5.0",
+    "@solana/web3.js": "^1.98.0"
+  },
+  "devDependencies": {
+    "@coral-xyz/anchor": "^0.31.1",
+    "@types/chai": "^4.3.20",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.15.0",
+    "chai": "^5.2.0",
+    "mocha": "^11.7.1",
+    "typescript": "^7.0.2",
+    "tsx": "^4.19.0"
+  }
+}
