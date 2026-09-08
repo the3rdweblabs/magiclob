@@ -116,7 +116,7 @@ For the **mainnet** ER endpoint, request access from the MagicBlock team.
 | [https://payments.magicblock.app/reference](https://payments.magicblock.app/reference) | Ephemeral SPL Token API canonical reference |
 
 Devnet local-only setup with a remote base layer: `RUST_LOG=info ephemeral-validator
---lifecycle ephemeral --remote-url "https://rpc.magicblock.app/devnet" --rpc-port 7799`.
+--lifecycle ephemeral --remotes "https://rpc.magicblock.app/devnet" --rpc-port 7799`.
 
 ---
 
@@ -795,7 +795,7 @@ solana transfer <your address> 0 -u "http://localhost:7799"
 anchor build && anchor deploy --provider.cluster devnet   # or cargo build-sbf + solana program deploy devnet
 RUST_LOG=info ephemeral-validator \
   --lifecycle ephemeral \
-  --remote-url "https://rpc.magicblock.app/devnet" \
+  --remotes "https://rpc.magicblock.app/devnet" \
   --rpc-port 7799
 ```
 
@@ -817,7 +817,7 @@ export VALIDATOR=mAGicPQYBMvcYveUZA5F5UNNwyHvfYh5xkLS2Fr1mev
 
 ```bash
 mb-test-validator --reset
-ephemeral-validator --remote-url "http://localhost:8899" --rpc-port 7799 --lifecycle ephemeral
+ephemeral-validator --remotes "http://localhost:8899" --rpc-port 7799 --lifecycle ephemeral
 # one oracle against base, one against the ER:
 VRF_ORACLE_SKIP_PREFLIGHT=true RPC_URL=http://localhost:8899  WEBSOCKET_URL=ws://localhost:8900 RUST_LOG=info vrf-oracle &
 VRF_ORACLE_SKIP_PREFLIGHT=true RPC_URL=http://localhost:7799  WEBSOCKET_URL=ws://localhost:7800 RUST_LOG=info vrf-oracle &
