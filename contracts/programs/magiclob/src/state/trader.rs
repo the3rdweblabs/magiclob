@@ -3,9 +3,10 @@
 
 //! `TraderState` tracks a single trader's virtual accounts inside one market.
 //!
-//! MagiCLOB uses real SPL Token-2022 custody. Deposited tokens sit in the pool
-//! `VaultState` account; `deposited_base` / `deposited_quote` track the trader's
-//! entitlement. Orders move tokens through the vault on match.
+//! MagiCLOB uses real SPL Token custody (classic Token program, not
+//! Token-2022). Deposited tokens sit in the pool `VaultState` account;
+//! `deposited_base` / `deposited_quote` track the trader's entitlement. Orders
+//! move tokens through the vault on match.
 
 use anchor_lang::prelude::*;
 

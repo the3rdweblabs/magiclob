@@ -393,7 +393,8 @@ export async function createOwnedTokenAccount(
  * idempotent `initializeVaultAccounts` program instruction. This is the same
  * call a real client makes and works on both the offline surfpool sim and a
  * live stack. On a live stack the program-deployed `initializeVaultAccounts`
- * creates the program-owned (owner == crate::ID) token accounts by CPI.
+ * creates the vault-PDA-owned token accounts (owner is the
+ * `[b"vault", market]` VaultState PDA, not the program ID) by CPI.
  */
 export async function createVaultTokenAccounts(
   market: Web3PublicKey,

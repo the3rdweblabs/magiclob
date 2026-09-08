@@ -42,7 +42,7 @@ pub struct InitializeVaultAccounts<'info> {
     pub base_mint: Box<Account<'info, Mint>>,
     #[account(constraint = quote_mint.key() == market.quote_mint @ MagiCLOBError::MintMismatch)]
     pub quote_mint: Box<Account<'info, Mint>>,
-    /// CHECK: program-owned SPL token account `[b"vault", market, b"base"]` held
+    /// CHECK: VaultState-PDA-owned SPL token account `[b"vault", market, b"base"]`
     /// as an `UncheckedAccount` because it may not exist yet (idempotent no-op
     /// once created). Ownership/state are validated inside the handler before
     /// any mutation.
@@ -121,8 +121,8 @@ fn init_account<'info>(
     token_program: &AccountInfo<'info>,
 ) -> Result<()> {
     if vault_account.lamports() > 0 {
-        // Already created: verify it is the expected program-owned token
-        // account before treating the instruction as a no-op.
+        // Already created: verify it is the expected VaultState-PDA-owned
+        // token account before treating the instruction as a no-op.
         if *vault_account.owner != token_program.key() {
             return err!(MagiCLOBError::InvalidTokenAccountOwner);
         }
