@@ -1,0 +1,4989 @@
+{
+  "address": "DSMktdhdDAGgittEg88wqrh2AJmNq6oj2YDnNnmeKeQe",
+  "metadata": {
+    "name": "magiclob",
+    "version": "1.0.0",
+    "spec": "0.1.0",
+    "description": "MagiCLOB - a price-time priority CLOB engine on Magicblock Ephemeral Rollups"
+  },
+  "instructions": [
+    {
+      "name": "borrow_flashloan_base",
+      "docs": [
+        "Borrow base tokens from the vault via flash loan."
+      ],
+      "discriminator": [
+        61,
+        189,
+        220,
+        31,
+        32,
+        11,
+        107,
+        222
+      ],
+      "accounts": [
+        {
+          "name": "borrower",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "borrower_trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "borrower"
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  115,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "destination_base_account",
+          "writable": true
+        },
+        {
+          "name": "flash_loan",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "borrow_flashloan_quote",
+      "docs": [
+        "Borrow quote tokens from the vault via flash loan."
+      ],
+      "discriminator": [
+        66,
+        183,
+        35,
+        226,
+        1,
+        217,
+        26,
+        72
+      ],
+      "accounts": [
+        {
+          "name": "borrower",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "borrower_trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "borrower"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "destination_quote_account",
+          "writable": true
+        },
+        {
+          "name": "flash_loan",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "bulk_batch_orders",
+      "docs": [
+        "Atomic batch of limit/market orders."
+      ],
+      "discriminator": [
+        100,
+        166,
+        227,
+        38,
+        133,
+        129,
+        186,
+        101
+      ],
+      "accounts": [
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  98,
+                  111,
+                  111,
+                  107
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "docs": [
+            "Signer authorizing use of the trader; also the default integrator."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "orders",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "OrderArgs"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "cancel_order",
+      "docs": [
+        "Remove a resting order by owner + client order id."
+      ],
+      "discriminator": [
+        95,
+        129,
+        237,
+        240,
+        8,
+        49,
+        223,
+        132
+      ],
+      "accounts": [
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  98,
+                  111,
+                  111,
+                  107
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "docs": [
+            "Signer authorizing use of the trader; also the default integrator."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "is_bid",
+          "type": "bool"
+        },
+        {
+          "name": "client_order_id",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "claim_rebates",
+      "docs": [
+        "Claim maker rebates for providing liquidity during low-fee epochs."
+      ],
+      "discriminator": [
+        110,
+        14,
+        89,
+        21,
+        203,
+        12,
+        2,
+        135
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "stake_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_account",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "delegate_trader_session",
+      "docs": [
+        "ER: delegate the trader + order book to an Ephemeral Rollup session."
+      ],
+      "discriminator": [
+        63,
+        206,
+        115,
+        151,
+        124,
+        70,
+        96,
+        100
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Fee payer of the session (signs the delegation)."
+          ],
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "buffer_trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  102,
+                  102,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "trader"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                184,
+                203,
+                59,
+                169,
+                45,
+                142,
+                163,
+                220,
+                93,
+                133,
+                250,
+                244,
+                161,
+                59,
+                150,
+                130,
+                150,
+                55,
+                24,
+                55,
+                123,
+                211,
+                245,
+                210,
+                157,
+                12,
+                144,
+                62,
+                227,
+                36,
+                27,
+                239
+              ]
+            }
+          }
+        },
+        {
+          "name": "delegation_record_trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "trader"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "delegation_metadata_trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110,
+                  45,
+                  109,
+                  101,
+                  116,
+                  97,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "trader"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buffer_order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  102,
+                  102,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "order_book"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                184,
+                203,
+                59,
+                169,
+                45,
+                142,
+                163,
+                220,
+                93,
+                133,
+                250,
+                244,
+                161,
+                59,
+                150,
+                130,
+                150,
+                55,
+                24,
+                55,
+                123,
+                211,
+                245,
+                210,
+                157,
+                12,
+                144,
+                62,
+                227,
+                36,
+                27,
+                239
+              ]
+            }
+          }
+        },
+        {
+          "name": "delegation_record_order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "order_book"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "delegation_metadata_order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  105,
+                  111,
+                  110,
+                  45,
+                  109,
+                  101,
+                  116,
+                  97,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "order_book"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "delegation_program"
+            }
+          }
+        },
+        {
+          "name": "order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  98,
+                  111,
+                  111,
+                  107
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "docs": [
+            "Wallet that owns and authorizes the trader session."
+          ],
+          "signer": true
+        },
+        {
+          "name": "owner_program",
+          "address": "DSMktdhdDAGgittEg88wqrh2AJmNq6oj2YDnNnmeKeQe"
+        },
+        {
+          "name": "delegation_program",
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deposit",
+      "docs": [
+        "Deposit SPL tokens into the pool vault."
+      ],
+      "discriminator": [
+        242,
+        35,
+        198,
+        137,
+        82,
+        225,
+        242,
+        182
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_mint"
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "base_token_account",
+          "writable": true
+        },
+        {
+          "name": "quote_token_account",
+          "writable": true
+        },
+        {
+          "name": "base_vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  115,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "base_amount",
+          "type": "u64"
+        },
+        {
+          "name": "quote_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "execute_proposal",
+      "docs": [
+        "Execute a passed proposal to apply fee changes."
+      ],
+      "discriminator": [
+        186,
+        60,
+        116,
+        133,
+        108,
+        128,
+        111,
+        28
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "proposal",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  112,
+                  111,
+                  115,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "proposal.id",
+                "account": "Proposal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_market",
+      "docs": [
+        "Create `MarketState` + `OrderBookState` + `VaultState` PDAs."
+      ],
+      "discriminator": [
+        35,
+        35,
+        189,
+        193,
+        155,
+        48,
+        170,
+        203
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "docs": [
+            "Admin; becomes `MarketState.authority`."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  114,
+                  107,
+                  101,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_mint"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  98,
+                  111,
+                  111,
+                  107
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_mint"
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "taker_fee_bps",
+          "type": "u16"
+        },
+        {
+          "name": "maker_fee_bps",
+          "type": "u16"
+        },
+        {
+          "name": "integrator_fee_bps_cap",
+          "type": "u16"
+        },
+        {
+          "name": "tick_size",
+          "type": "u64"
+        },
+        {
+          "name": "lot_size",
+          "type": "u64"
+        },
+        {
+          "name": "min_size",
+          "type": "u64"
+        },
+        {
+          "name": "stake_required",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "initialize_vault_accounts",
+      "docs": [
+        "Lazily create the vault's SPL base/quote token accounts (idempotent)."
+      ],
+      "discriminator": [
+        167,
+        28,
+        249,
+        202,
+        129,
+        245,
+        121,
+        235
+      ],
+      "accounts": [
+        {
+          "name": "rent_payer",
+          "docs": [
+            "Pays the rent-exempt lamports for the two vault token accounts."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "base_mint"
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "base_vault_account",
+          "docs": [
+            "as an `UncheckedAccount` because it may not exist yet (idempotent no-op",
+            "once created). Ownership/state are validated inside the handler before",
+            "any mutation."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  115,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "modify_order",
+      "docs": [
+        "Modify a resting order's quantity/price."
+      ],
+      "discriminator": [
+        47,
+        124,
+        117,
+        255,
+        201,
+        197,
+        130,
+        94
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "signer": true
+        },
+        {
+          "name": "market",
+          "docs": [
+            "to keep the SBPF stack frame under the 4096-byte limit. `owner = crate::ID`",
+            "constrains it to a program-owned data account at handoff, and `handle`",
+            "re-deserializes and validates `MarketState` (ensure_active) before any",
+            "mutation, so no unchecked access occurs."
+          ]
+        },
+        {
+          "name": "order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  98,
+                  111,
+                  111,
+                  107
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "client_order_id",
+          "type": "u64"
+        },
+        {
+          "name": "is_bid",
+          "type": "bool"
+        },
+        {
+          "name": "new_quantity",
+          "type": "u64"
+        },
+        {
+          "name": "new_price",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "place_limit_order",
+      "docs": [
+        "Place a limit order with time-in-force and self-trade prevention."
+      ],
+      "discriminator": [
+        108,
+        176,
+        33,
+        186,
+        146,
+        229,
+        1,
+        197
+      ],
+      "accounts": [
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  98,
+                  111,
+                  111,
+                  107
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "docs": [
+            "Signer authorizing use of the trader; also the default integrator."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "price",
+          "type": "u64"
+        },
+        {
+          "name": "qty",
+          "type": "u64"
+        },
+        {
+          "name": "client_order_id",
+          "type": "u64"
+        },
+        {
+          "name": "is_bid",
+          "type": "bool"
+        },
+        {
+          "name": "integrator_fee_bps",
+          "type": "u16"
+        },
+        {
+          "name": "time_in_force",
+          "type": "u8"
+        },
+        {
+          "name": "self_matching_option",
+          "type": "u8"
+        },
+        {
+          "name": "expire_timestamp",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "place_market_order",
+      "docs": [
+        "Sweep the opposite side until filled or the book is exhausted."
+      ],
+      "discriminator": [
+        90,
+        118,
+        192,
+        252,
+        192,
+        99,
+        39,
+        145
+      ],
+      "accounts": [
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  98,
+                  111,
+                  111,
+                  107
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "docs": [
+            "Signer authorizing use of the trader; also the default integrator."
+          ],
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "qty",
+          "type": "u64"
+        },
+        {
+          "name": "client_order_id",
+          "type": "u64"
+        },
+        {
+          "name": "is_bid",
+          "type": "bool"
+        },
+        {
+          "name": "integrator_fee_bps",
+          "type": "u16"
+        },
+        {
+          "name": "self_matching_option",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "process_undelegation",
+      "discriminator": [
+        196,
+        28,
+        41,
+        206,
+        48,
+        37,
+        51,
+        167
+      ],
+      "accounts": [
+        {
+          "name": "base_account",
+          "writable": true
+        },
+        {
+          "name": "buffer",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  110,
+                  100,
+                  101,
+                  108,
+                  101,
+                  103,
+                  97,
+                  116,
+                  101,
+                  45,
+                  98,
+                  117,
+                  102,
+                  102,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "base_account"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                181,
+                183,
+                0,
+                225,
+                242,
+                87,
+                58,
+                192,
+                204,
+                6,
+                34,
+                1,
+                52,
+                74,
+                207,
+                151,
+                184,
+                53,
+                6,
+                235,
+                140,
+                229,
+                25,
+                152,
+                204,
+                98,
+                126,
+                24,
+                147,
+                128,
+                167,
+                62
+              ]
+            }
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "account_seeds",
+          "type": {
+            "vec": "bytes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "register_trader",
+      "docs": [
+        "Create a `TraderState` for `(market, owner)`."
+      ],
+      "discriminator": [
+        75,
+        243,
+        224,
+        167,
+        1,
+        5,
+        51,
+        32
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Rent payer. May differ from `owner`."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "docs": [
+            "Wallet that owns the internal balance ledger."
+          ],
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "base_endowment",
+          "type": "u64"
+        },
+        {
+          "name": "quote_endowment",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "return_flashloan_base",
+      "docs": [
+        "Repay a base flash loan (principal + fee)."
+      ],
+      "discriminator": [
+        137,
+        145,
+        102,
+        191,
+        232,
+        51,
+        128,
+        111
+      ],
+      "accounts": [
+        {
+          "name": "borrower",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "borrower_trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "borrower"
+              }
+            ]
+          }
+        },
+        {
+          "name": "base_vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  115,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "source_base_account",
+          "writable": true
+        },
+        {
+          "name": "flash_loan",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "return_flashloan_quote",
+      "docs": [
+        "Repay a quote flash loan (principal + fee)."
+      ],
+      "discriminator": [
+        2,
+        36,
+        13,
+        241,
+        29,
+        46,
+        24,
+        116
+      ],
+      "accounts": [
+        {
+          "name": "borrower",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "borrower_trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "borrower"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "source_quote_account",
+          "writable": true
+        },
+        {
+          "name": "flash_loan",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "settle_and_undelegate",
+      "docs": [
+        "ER: commit the session state and undelegate (release the Delegation lock)."
+      ],
+      "discriminator": [
+        169,
+        143,
+        70,
+        235,
+        249,
+        1,
+        119,
+        52
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "docs": [
+            "Session fee payer."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market"
+        },
+        {
+          "name": "order_book",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  100,
+                  101,
+                  114,
+                  95,
+                  98,
+                  111,
+                  111,
+                  107
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "owner",
+          "docs": [
+            "Wallet that owns and authorizes settlement and undelegation."
+          ],
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "stake",
+      "docs": [
+        "Lock quote tokens into a StakeInfo PDA for fee discounts and governance."
+      ],
+      "discriminator": [
+        206,
+        176,
+        202,
+        18,
+        200,
+        209,
+        179,
+        108
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "stake_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_account",
+          "writable": true
+        },
+        {
+          "name": "vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "submit_proposal",
+      "docs": [
+        "Submit a governance proposal to change market fees."
+      ],
+      "discriminator": [
+        224,
+        38,
+        210,
+        52,
+        167,
+        150,
+        221,
+        150
+      ],
+      "accounts": [
+        {
+          "name": "proposer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "proposal",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  112,
+                  111,
+                  115,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "arg",
+                "path": "proposal_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "stake_info",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "proposer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "proposal_id",
+          "type": "u64"
+        },
+        {
+          "name": "taker_fee_bps",
+          "type": "u16"
+        },
+        {
+          "name": "maker_fee_bps",
+          "type": "u16"
+        },
+        {
+          "name": "start_epoch",
+          "type": "u64"
+        },
+        {
+          "name": "end_epoch",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "unstake",
+      "docs": [
+        "Release staked tokens after the epoch lockup period."
+      ],
+      "discriminator": [
+        90,
+        95,
+        107,
+        42,
+        205,
+        124,
+        50,
+        225
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "stake_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_account",
+          "writable": true
+        },
+        {
+          "name": "vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "vote",
+      "docs": [
+        "Vote for or against an active proposal."
+      ],
+      "discriminator": [
+        227,
+        110,
+        155,
+        23,
+        136,
+        126,
+        172,
+        25
+      ],
+      "accounts": [
+        {
+          "name": "voter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "proposal",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  112,
+                  111,
+                  115,
+                  97,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "proposal.id",
+                "account": "Proposal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "stake_info",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "voter"
+              }
+            ]
+          }
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "vote_for",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "withdraw",
+      "docs": [
+        "Withdraw SPL tokens from the pool vault."
+      ],
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "market",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              }
+            ]
+          }
+        },
+        {
+          "name": "trader",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  114,
+                  97,
+                  100,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "destination_base_account",
+          "writable": true
+        },
+        {
+          "name": "destination_quote_account",
+          "writable": true
+        },
+        {
+          "name": "base_vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  97,
+                  115,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "quote_vault_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "market"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "base_amount",
+          "type": "u64"
+        },
+        {
+          "name": "quote_amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "FlashLoan",
+      "discriminator": [
+        178,
+        201,
+        231,
+        142,
+        247,
+        89,
+        211,
+        60
+      ]
+    },
+    {
+      "name": "MarketState",
+      "discriminator": [
+        0,
+        125,
+        123,
+        215,
+        95,
+        96,
+        164,
+        194
+      ]
+    },
+    {
+      "name": "OrderBookState",
+      "discriminator": [
+        217,
+        149,
+        164,
+        121,
+        67,
+        33,
+        135,
+        238
+      ]
+    },
+    {
+      "name": "Proposal",
+      "discriminator": [
+        26,
+        94,
+        189,
+        187,
+        116,
+        136,
+        53,
+        33
+      ]
+    },
+    {
+      "name": "StakeInfo",
+      "discriminator": [
+        66,
+        62,
+        68,
+        70,
+        108,
+        179,
+        183,
+        235
+      ]
+    },
+    {
+      "name": "TraderState",
+      "discriminator": [
+        124,
+        33,
+        101,
+        17,
+        158,
+        79,
+        26,
+        140
+      ]
+    },
+    {
+      "name": "VaultState",
+      "discriminator": [
+        228,
+        196,
+        82,
+        165,
+        98,
+        210,
+        235,
+        152
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "ClaimRebatesEvent",
+      "discriminator": [
+        28,
+        91,
+        249,
+        90,
+        130,
+        22,
+        3,
+        133
+      ]
+    },
+    {
+      "name": "DepositEvent",
+      "discriminator": [
+        120,
+        248,
+        61,
+        83,
+        31,
+        142,
+        107,
+        144
+      ]
+    },
+    {
+      "name": "FlashLoanEvent",
+      "discriminator": [
+        214,
+        143,
+        143,
+        217,
+        173,
+        237,
+        52,
+        26
+      ]
+    },
+    {
+      "name": "OrderCancelled",
+      "discriminator": [
+        108,
+        56,
+        128,
+        68,
+        168,
+        113,
+        168,
+        239
+      ]
+    },
+    {
+      "name": "OrderFilled",
+      "discriminator": [
+        120,
+        124,
+        109,
+        66,
+        249,
+        116,
+        174,
+        30
+      ]
+    },
+    {
+      "name": "OrderModified",
+      "discriminator": [
+        150,
+        117,
+        33,
+        209,
+        57,
+        25,
+        209,
+        20
+      ]
+    },
+    {
+      "name": "OrderPlaced",
+      "discriminator": [
+        96,
+        130,
+        204,
+        234,
+        169,
+        219,
+        216,
+        227
+      ]
+    },
+    {
+      "name": "ProposalExecutedEvent",
+      "discriminator": [
+        120,
+        242,
+        13,
+        36,
+        223,
+        3,
+        110,
+        180
+      ]
+    },
+    {
+      "name": "ProposalSubmittedEvent",
+      "discriminator": [
+        210,
+        156,
+        179,
+        54,
+        84,
+        52,
+        115,
+        4
+      ]
+    },
+    {
+      "name": "SessionSettled",
+      "discriminator": [
+        127,
+        161,
+        59,
+        136,
+        23,
+        168,
+        191,
+        149
+      ]
+    },
+    {
+      "name": "StakeEvent",
+      "discriminator": [
+        226,
+        134,
+        188,
+        173,
+        19,
+        33,
+        75,
+        175
+      ]
+    },
+    {
+      "name": "UnstakeEvent",
+      "discriminator": [
+        162,
+        104,
+        137,
+        228,
+        81,
+        3,
+        79,
+        197
+      ]
+    },
+    {
+      "name": "VoteEvent",
+      "discriminator": [
+        195,
+        71,
+        250,
+        105,
+        120,
+        119,
+        234,
+        134
+      ]
+    },
+    {
+      "name": "WithdrawEvent",
+      "discriminator": [
+        22,
+        9,
+        133,
+        26,
+        160,
+        44,
+        71,
+        192
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidAuthority",
+      "msg": "Only the market authority may perform this action"
+    },
+    {
+      "code": 6001,
+      "name": "MarketNotActive",
+      "msg": "The market is not active"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidPrice",
+      "msg": "Order price must be greater than zero"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidQuantity",
+      "msg": "Order quantity must be greater than zero"
+    },
+    {
+      "code": 6004,
+      "name": "InsufficientBalance",
+      "msg": "Insufficient balance for the requested fill"
+    },
+    {
+      "code": 6005,
+      "name": "OrderNotFound",
+      "msg": "Order was not found on the specified side"
+    },
+    {
+      "code": 6006,
+      "name": "BookCapacityReached",
+      "msg": "The order book has reached its capacity"
+    },
+    {
+      "code": 6007,
+      "name": "TraderAuthMismatch",
+      "msg": "Order owner does not match the trader account"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidFeeBps",
+      "msg": "Fee basis points must be within 0..=10000"
+    },
+    {
+      "code": 6009,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic overflow while settling the match"
+    },
+    {
+      "code": 6010,
+      "name": "MakerAccountMissing",
+      "msg": "A maker trader account was not provided in remaining_accounts"
+    },
+    {
+      "code": 6011,
+      "name": "UnexpectedMakerAccount",
+      "msg": "An unexpected maker account was provided in remaining_accounts"
+    },
+    {
+      "code": 6012,
+      "name": "DuplicateMakerAccount",
+      "msg": "A maker trader account was provided more than once"
+    },
+    {
+      "code": 6013,
+      "name": "BatchTooLarge",
+      "msg": "Batch size exceeds the maximum supported length"
+    },
+    {
+      "code": 6014,
+      "name": "AlreadyDelegated",
+      "msg": "The trader account is already delegated"
+    },
+    {
+      "code": 6015,
+      "name": "InvalidLotSize",
+      "msg": "Order quantity must be a multiple of lot size"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidMinSize",
+      "msg": "Order quantity is below minimum size"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidTickSize",
+      "msg": "Order price must be a multiple of tick size"
+    },
+    {
+      "code": 6018,
+      "name": "PostOnlyWouldCross",
+      "msg": "Post-only order would cross the book"
+    },
+    {
+      "code": 6019,
+      "name": "FillOrKillNotFilled",
+      "msg": "Fill-or-kill order cannot be fully filled"
+    },
+    {
+      "code": 6020,
+      "name": "PostOnlyCrossesBook",
+      "msg": "Post-only order would cross the book"
+    },
+    {
+      "code": 6021,
+      "name": "FOKOrderCannotBeFullyFilled",
+      "msg": "Fill-or-kill order cannot be fully filled"
+    },
+    {
+      "code": 6022,
+      "name": "SelfTradeCancelTaker",
+      "msg": "Self-trade prevention cancelled the taker"
+    },
+    {
+      "code": 6023,
+      "name": "SelfTradeCancelMaker",
+      "msg": "Self-trade prevention cancelled the maker"
+    },
+    {
+      "code": 6024,
+      "name": "OrderExpired",
+      "msg": "Order has expired"
+    },
+    {
+      "code": 6025,
+      "name": "InvalidModifyQuantity",
+      "msg": "New quantity must be less than original quantity"
+    },
+    {
+      "code": 6026,
+      "name": "InvalidModifyFilled",
+      "msg": "New quantity must be greater than filled quantity"
+    },
+    {
+      "code": 6027,
+      "name": "InvalidModifyPrice",
+      "msg": "Order price cannot be changed without losing queue priority"
+    },
+    {
+      "code": 6028,
+      "name": "FlashLoanNotRepaid",
+      "msg": "Flash loan was not repaid"
+    },
+    {
+      "code": 6029,
+      "name": "InvalidFlashLoanAsset",
+      "msg": "Invalid flash loan asset type"
+    },
+    {
+      "code": 6030,
+      "name": "FlashLoanInvalidBorrower",
+      "msg": "Flash loan borrower mismatch"
+    },
+    {
+      "code": 6031,
+      "name": "InsufficientVaultBalance",
+      "msg": "Insufficient vault balance for withdrawal"
+    },
+    {
+      "code": 6032,
+      "name": "InvalidTokenAccountOwner",
+      "msg": "Invalid token account owner"
+    },
+    {
+      "code": 6033,
+      "name": "MintMismatch",
+      "msg": "Mint mismatch between market and token account"
+    },
+    {
+      "code": 6034,
+      "name": "ProposalNotActive",
+      "msg": "Governance proposal not active"
+    },
+    {
+      "code": 6035,
+      "name": "ProposalEnded",
+      "msg": "Governance proposal already ended"
+    },
+    {
+      "code": 6036,
+      "name": "InsufficientStake",
+      "msg": "Insufficient stake for governance action"
+    },
+    {
+      "code": 6037,
+      "name": "InvalidSessionKey",
+      "msg": "Session key is not approved"
+    },
+    {
+      "code": 6038,
+      "name": "CrankAuthorityMismatch",
+      "msg": "Crank authority mismatch"
+    },
+    {
+      "code": 6039,
+      "name": "PoolAlreadyExists",
+      "msg": "Pool already exists"
+    },
+    {
+      "code": 6040,
+      "name": "PermissionDenied",
+      "msg": "Permission denied for this group"
+    },
+    {
+      "code": 6041,
+      "name": "NoStake",
+      "msg": "Trader has no active stake"
+    },
+    {
+      "code": 6042,
+      "name": "StakeLockupNotPassed",
+      "msg": "Stake epoch lockup has not yet passed"
+    },
+    {
+      "code": 6043,
+      "name": "AlreadyStaked",
+      "msg": "Trader is already staked"
+    },
+    {
+      "code": 6044,
+      "name": "StakeBelowMinimum",
+      "msg": "Stake amount is below the minimum"
+    },
+    {
+      "code": 6045,
+      "name": "StakeExceedsBalance",
+      "msg": "Stake amount exceeds available balance"
+    },
+    {
+      "code": 6046,
+      "name": "InvalidProposalStatus",
+      "msg": "Proposal status does not allow this action"
+    },
+    {
+      "code": 6047,
+      "name": "AlreadyVoted",
+      "msg": "Voter has already voted on this proposal"
+    },
+    {
+      "code": 6048,
+      "name": "ZeroVoteWeight",
+      "msg": "Vote weight is zero"
+    },
+    {
+      "code": 6049,
+      "name": "ProposalNotEnded",
+      "msg": "Proposal has not reached its end epoch"
+    },
+    {
+      "code": 6050,
+      "name": "ProposalNotPassed",
+      "msg": "Proposal did not pass"
+    },
+    {
+      "code": 6051,
+      "name": "QuorumNotReached",
+      "msg": "Proposal quorum not reached"
+    },
+    {
+      "code": 6052,
+      "name": "NoRebatesAvailable",
+      "msg": "No rebates available to claim"
+    }
+  ],
+  "types": [
+    {
+      "name": "ClaimRebatesEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DepositEvent",
+      "docs": [
+        "Emitted on deposit into the pool vault."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "base_amount",
+            "type": "u64"
+          },
+          {
+            "name": "quote_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Fill",
+      "docs": [
+        "One executed fill report."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "price",
+            "docs": [
+              "Execution price of this fill."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "qty",
+            "docs": [
+              "Filled base quantity."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "maker_order_id",
+            "docs": [
+              "Sequence id of the resting (maker) order."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "maker",
+            "docs": [
+              "Owner of the resting (maker) order."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "maker_fee",
+            "docs": [
+              "Maker fee charged on this fill."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FlashLoan",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "docs": [
+              "Market this flash loan belongs to."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "borrower",
+            "docs": [
+              "Borrower of the flash loan."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "asset",
+            "docs": [
+              "Asset type: 0 = base, 1 = quote."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "amount",
+            "docs": [
+              "Amount borrowed."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "docs": [
+              "Fee charged for the flash loan."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FlashLoanEvent",
+      "docs": [
+        "Emitted on flash loan borrow."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "borrower",
+            "type": "pubkey"
+          },
+          {
+            "name": "asset",
+            "type": "u8"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "docs": [
+              "Admin that can pause/delist the market. Set at init to the initializer."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "base_mint",
+            "docs": [
+              "Base asset mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
+            "docs": [
+              "Quote asset mint."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "taker_fee_bps",
+            "docs": [
+              "Taker fee rate in bps, charged on the executed notional."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "maker_fee_bps",
+            "docs": [
+              "Maker fee rate in bps, charged on the executed notional."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "integrator_fee_bps_cap",
+            "docs": [
+              "Upper bound for the integrator fee rate of any resting order."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "status",
+            "docs": [
+              "Current market status."
+            ],
+            "type": {
+              "defined": {
+                "name": "MarketStatus"
+              }
+            }
+          },
+          {
+            "name": "accumulated_fees",
+            "docs": [
+              "Running counter of protocol fees collected (taker + maker)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "accumulated_integrator_fees",
+            "docs": [
+              "Running counter of integrator fees collected."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump for `[b\"market\", base_mint, quote_mint]`."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "tick_size",
+            "docs": [
+              "Minimum price increment (quote units per base unit)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "lot_size",
+            "docs": [
+              "Minimum quantity increment (base units)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "min_size",
+            "docs": [
+              "Minimum order quantity (base units)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "epoch",
+            "docs": [
+              "Current epoch number."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "epoch_start_timestamp",
+            "docs": [
+              "Epoch start timestamp (unix millis)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "epoch_duration",
+            "docs": [
+              "Epoch duration in milliseconds."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "current_taker_fee_bps",
+            "docs": [
+              "Current epoch taker fee (bps)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "current_maker_fee_bps",
+            "docs": [
+              "Current epoch maker fee (bps)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "next_taker_fee_bps",
+            "docs": [
+              "Next epoch taker fee (bps), applied at epoch transition."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "next_maker_fee_bps",
+            "docs": [
+              "Next epoch maker fee (bps), applied at epoch transition."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "stake_required",
+            "docs": [
+              "Minimum quote stake required for fee discounts / governance."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "min_order_size",
+            "docs": [
+              "Minimum order quantity allowed in this market."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "maker_rebate_bps",
+            "docs": [
+              "Maker rebate basis points for staked traders (subtracted from maker fee)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "base_decimals",
+            "docs": [
+              "Base token decimals (SCPB/SFT order sizes are in base raw units)."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "quote_decimals",
+            "docs": [
+              "Quote token decimals (prices and balances are in quote raw units)."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "_reserved",
+            "docs": [
+              "Padding for future expansion."
+            ],
+            "type": {
+              "array": [
+                "u8",
+                4
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "MarketStatus",
+      "docs": [
+        "Market lifecycle status."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Active"
+          },
+          {
+            "name": "Paused"
+          },
+          {
+            "name": "Delisted"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MatchReport",
+      "docs": [
+        "End-of-call summary for a single aggressive order; emitted as an event."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "taker_order_id",
+            "docs": [
+              "Sequence id assigned to this aggressive order."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "is_bid",
+            "docs": [
+              "True if the aggressive order was a bid."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "total_base_filled",
+            "docs": [
+              "Total base filled."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "total_quote_filled",
+            "docs": [
+              "Total quote value filled (excludes fees)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "avg_fill_price",
+            "docs": [
+              "VWAP of the fills."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "remaining_base",
+            "docs": [
+              "Base quantity that remains unmatched (kept resting for limits)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "fills",
+            "docs": [
+              "Per-fill breakdown."
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Fill"
+                }
+              }
+            }
+          },
+          {
+            "name": "taker_fee_total",
+            "docs": [
+              "Total taker fee charged this call."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "maker_fee_total",
+            "docs": [
+              "Total maker fee charged this call."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "integrator_fee_total",
+            "docs": [
+              "Total integrator fee charged this call (credited to `accumulated_integrator_fees`)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "self_trade",
+            "docs": [
+              "True if a self-trade was detected and handled."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "order_expired",
+            "docs": [
+              "True if any maker was skipped due to expiration."
+            ],
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrderArgs",
+      "docs": [
+        "Client input for a single order (used by place instructions and batches)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "is_bid",
+            "docs": [
+              "True for a bid (buy), false for an ask (sell)."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "price",
+            "docs": [
+              "Limit price; `0` is treated as a market order."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "qty",
+            "docs": [
+              "Quantity in base units."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "client_order_id",
+            "docs": [
+              "Client-supplied order id."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "time_in_force",
+            "docs": [
+              "Time-in-force for this order."
+            ],
+            "type": {
+              "defined": {
+                "name": "TimeInForce"
+              }
+            }
+          },
+          {
+            "name": "self_matching_option",
+            "docs": [
+              "Self-trade prevention mode."
+            ],
+            "type": {
+              "defined": {
+                "name": "SelfMatchingOption"
+              }
+            }
+          },
+          {
+            "name": "expire_timestamp",
+            "docs": [
+              "Expiration timestamp in Unix seconds."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrderBookState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "docs": [
+              "Market this book belongs to."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "docs": [
+              "Market authority (mirrors `MarketState.authority`)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "order_sequence",
+            "docs": [
+              "Monotonic counter issuing `sequence` to resting orders (FIFO tiebreak)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bid_head",
+            "docs": [
+              "Highest-price active bid slot, or `NONE_IDX`."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "ask_head",
+            "docs": [
+              "Lowest-price active ask slot, or `NONE_IDX`."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "bid_free",
+            "docs": [
+              "Free-slot stack head for the bid pool, or `NONE_IDX`."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "ask_free",
+            "docs": [
+              "Free-slot stack head for the ask pool, or `NONE_IDX`."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "bid_count",
+            "docs": [
+              "High-water mark (slots ever handed out) for the bid pool."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "ask_count",
+            "docs": [
+              "High-water mark (slots ever handed out) for the ask pool."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "bids",
+            "docs": [
+              "Bid slot pool."
+            ],
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "OrderNode"
+                  }
+                },
+                13
+              ]
+            }
+          },
+          {
+            "name": "asks",
+            "docs": [
+              "Ask slot pool."
+            ],
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "OrderNode"
+                  }
+                },
+                13
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrderCancelled",
+      "docs": [
+        "Emitted when a resting order is cancelled."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "client_order_id",
+            "type": "u64"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "OrderSide"
+              }
+            }
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "qty_remaining",
+            "type": "u64"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrderFilled",
+      "docs": [
+        "Emitted after a match executes (taker or batch element)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "report",
+            "type": {
+              "defined": {
+                "name": "MatchReport"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrderModified",
+      "docs": [
+        "Emitted when an order is modified."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "order_id",
+            "type": "u64"
+          },
+          {
+            "name": "client_order_id",
+            "type": "u64"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "OrderSide"
+              }
+            }
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "previous_quantity",
+            "type": "u64"
+          },
+          {
+            "name": "new_quantity",
+            "type": "u64"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrderNode",
+      "docs": [
+        "On-disk representation of a resting order inside an `OrderBookState`.",
+        "",
+        "Not an account: this borsh-serializes inside the order book account."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "active",
+            "docs": [
+              "True while the slot is occupied by a live order."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "side",
+            "docs": [
+              "Which side of the book this order rests on."
+            ],
+            "type": {
+              "defined": {
+                "name": "OrderSide"
+              }
+            }
+          },
+          {
+            "name": "price",
+            "docs": [
+              "Limit price (quote units per base unit). Market-shaped leftovers never rest."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "qty_remaining",
+            "docs": [
+              "Remaining unfilled quantity (base units)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "owner",
+            "docs": [
+              "Owner of the order (trader)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "integrator",
+            "docs": [
+              "Integrator credited with the integrator fee on this order."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "integrator_fee_bps",
+            "docs": [
+              "Integrator fee rate (bp) locked at placement; capped per market."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "client_order_id",
+            "docs": [
+              "Client-supplied order id used for cancels and reporting."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "sequence",
+            "docs": [
+              "Book sequence number - FIFO tiebreaker at equal price."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "prev",
+            "docs": [
+              "Previous slot in the per-side doubly linked list, or `NONE_IDX`."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "next",
+            "docs": [
+              "Next slot in the per-side doubly linked list, or `NONE_IDX`."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "expire_timestamp",
+            "docs": [
+              "Expiration timestamp in Unix seconds. Order is invalid after this time."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "filled_quantity",
+            "docs": [
+              "Filled quantity so far, used for status and modification checks."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "time_in_force",
+            "docs": [
+              "Time-in-force governing this order."
+            ],
+            "type": {
+              "defined": {
+                "name": "TimeInForce"
+              }
+            }
+          },
+          {
+            "name": "self_matching_option",
+            "docs": [
+              "Self-trade prevention mode."
+            ],
+            "type": {
+              "defined": {
+                "name": "SelfMatchingOption"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrderPlaced",
+      "docs": [
+        "Emitted when a resting order is accepted onto the book."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "order_id",
+            "type": "u64"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "OrderSide"
+              }
+            }
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "qty",
+            "type": "u64"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OrderSide",
+      "docs": [
+        "Side of the book."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Bid"
+          },
+          {
+            "name": "Ask"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Proposal",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "docs": [
+              "Unique proposal id (monotonic per market)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "market",
+            "docs": [
+              "Market this proposal targets."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "proposer",
+            "docs": [
+              "Proposer (must meet minimum stake)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "taker_fee_bps",
+            "docs": [
+              "Proposed taker fee (bps)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "maker_fee_bps",
+            "docs": [
+              "Proposed maker fee (bps)."
+            ],
+            "type": "u16"
+          },
+          {
+            "name": "votes_for",
+            "docs": [
+              "Votes in favor (weighted by stake)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "votes_against",
+            "docs": [
+              "Votes against (weighted by stake)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "start_epoch",
+            "docs": [
+              "Epoch when voting started."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "end_epoch",
+            "docs": [
+              "Epoch when voting ends."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "status",
+            "docs": [
+              "Current proposal status."
+            ],
+            "type": {
+              "defined": {
+                "name": "ProposalStatus"
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump for `[b\"proposal\", market, id_bytes]`."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProposalExecutedEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "proposal_id",
+            "type": "u64"
+          },
+          {
+            "name": "taker_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "maker_fee_bps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProposalStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Active"
+          },
+          {
+            "name": "Passed"
+          },
+          {
+            "name": "Rejected"
+          },
+          {
+            "name": "Executed"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProposalSubmittedEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "proposal_id",
+            "type": "u64"
+          },
+          {
+            "name": "proposer",
+            "type": "pubkey"
+          },
+          {
+            "name": "taker_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "maker_fee_bps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SelfMatchingOption",
+      "docs": [
+        "Self-trade prevention mode."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Allowed"
+          },
+          {
+            "name": "CancelTaker"
+          },
+          {
+            "name": "CancelMaker"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SessionSettled",
+      "docs": [
+        "Emitted at session settlement (pre-undelegation state summary)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "trader",
+            "type": "pubkey"
+          },
+          {
+            "name": "best_bid",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "best_ask",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "bid_depth",
+            "type": "u64"
+          },
+          {
+            "name": "ask_depth",
+            "type": "u64"
+          },
+          {
+            "name": "accumulated_fees",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "docs": [
+              "Market this stake belongs to."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "docs": [
+              "Trader/owner of the stake."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "docs": [
+              "Amount staked (quote units)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "epoch_activated",
+            "docs": [
+              "Epoch when the stake became active."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "active",
+            "docs": [
+              "Whether the stake is currently active (not yet unstaked)."
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump for `[b\"stake\", market, owner]`."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TimeInForce",
+      "docs": [
+        "Time in force - only GTC for the MVP."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "GoodTillCancelled"
+          },
+          {
+            "name": "ImmediateOrCancel"
+          },
+          {
+            "name": "FillOrKill"
+          },
+          {
+            "name": "PostOnly"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TraderState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "Wallet that owns this trader account."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "base_balance",
+            "docs": [
+              "Base asset balance (internal ledger)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "quote_balance",
+            "docs": [
+              "Quote asset balance (internal ledger)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "status",
+            "docs": [
+              "Status of the trader."
+            ],
+            "type": {
+              "defined": {
+                "name": "TraderStatus"
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump for `[b\"trader\", market, owner]`."
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "deposited_base",
+            "docs": [
+              "Total base tokens deposited into the pool vault."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "deposited_quote",
+            "docs": [
+              "Total quote tokens deposited into the pool vault."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "base_vault",
+            "docs": [
+              "Trader's base SPL token account (ATA or explicit)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_vault",
+            "docs": [
+              "Trader's quote SPL token account (ATA or explicit)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "staked_amount",
+            "docs": [
+              "Staked quote amount for fee discounts / governance."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "stake_epoch",
+            "docs": [
+              "Epoch when stake becomes active."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "epoch_maker_fees_paid",
+            "docs": [
+              "Maker fees paid in the current epoch (reset at epoch advance)."
+            ],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TraderStatus",
+      "docs": [
+        "Trader status."
+      ],
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Active"
+          },
+          {
+            "name": "Delegated"
+          },
+          {
+            "name": "Banned"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UnstakeEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "docs": [
+              "Market this vault belongs to."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "vault_base_balance",
+            "docs": [
+              "Pool's base token balance (SPL Token account)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "vault_quote_balance",
+            "docs": [
+              "Pool's quote token balance (SPL Token account)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "settled_base",
+            "docs": [
+              "Base tokens the pool owes to traders (outgoing settlement liability)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "settled_quote",
+            "docs": [
+              "Quote tokens the pool owes to traders (outgoing settlement liability)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "owed_base",
+            "docs": [
+              "Base tokens traders owe to the pool (incoming settlement receivable)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "owed_quote",
+            "docs": [
+              "Quote tokens traders owe to the pool (incoming settlement receivable)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump for `[b\"vault\", market]`."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VoteEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "proposal_id",
+            "type": "u64"
+          },
+          {
+            "name": "voter",
+            "type": "pubkey"
+          },
+          {
+            "name": "weight",
+            "type": "u64"
+          },
+          {
+            "name": "vote_for",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawEvent",
+      "docs": [
+        "Emitted on withdrawal from the pool vault."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "base_amount",
+            "type": "u64"
+          },
+          {
+            "name": "quote_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+}

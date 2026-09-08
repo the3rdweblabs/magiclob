@@ -1,0 +1,63 @@
+{
+  "name": "@magiclob/sdk",
+  "version": "1.0.0",
+  "description": "TypeScript SDK for magiCLOB - a price-time priority CLOB on Solana + Magicblock Ephemeral Rollups",
+  "author": {
+    "name": "THE3RDWEBLABS (@CYBWithFlourish)",
+    "url": "https://github.com/the3rdweblabs"
+  },
+  "license": "GPL-3.0-only",
+  "homepage": "https://github.com/the3rdweblabs/magiclob/tree/main/sdk",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/the3rdweblabs/magiclob.git"
+  },
+  "bugs": {
+    "url": "https://github.com/the3rdweblabs/magiclob/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "docs",
+    "src/idl"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist",
+    "test": "npm run build && node --test test/sdk.test.mjs",
+    "test:only": "node --test test/sdk.test.mjs",
+    "test:integration": "npm run build && node --test test/integration.test.mjs"
+  },
+  "keywords": [
+    "solana",
+    "magicblock",
+    "ephemeral-rollups",
+    "clob",
+    "dex",
+    "orderbook"
+  ],
+  "dependencies": {
+    "@solana/web3.js": "^1.98.0"
+  },
+  "devDependencies": {
+    "@solana/spl-token": "^0.1.8",
+    "@solana/surfpool": "^1.5.0",
+    "@types/node": "^22.20.1",
+    "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
