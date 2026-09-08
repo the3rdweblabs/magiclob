@@ -1,0 +1,23 @@
+[toolchain]
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+magiclob = "DSMktdhdDAGgittEg88wqrh2AJmNq6oj2YDnNnmeKeQe"
+
+[programs.localnet]
+magiclob = "DSMktdhdDAGgittEg88wqrh2AJmNq6oj2YDnNnmeKeQe"
+
+[provider]
+cluster = "devnet"
+wallet = "~/.config/solana/id.json"
+
+[workspace]
+members = ["programs/magiclob"]
+
+[scripts]
+test = "npm --prefix tests test"
+
+[hooks]
