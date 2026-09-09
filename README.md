@@ -255,6 +255,28 @@ Notes
 
 ---
 
+## Deployment (devnet / mainnet)
+
+`scripts/deploy.sh` deploys the program on first run (creating the account) and
+upgrades it on later runs, signed by `~/.config/solana/id.json`.
+
+```bash
+DRY_RUN=1 ./scripts/deploy.sh                          # resolve config, print commands, touch nothing
+SOLANA_NETWORK=devnet ./scripts/deploy.sh              # or rely on app/.env (currently devnet)
+DEPLOY_CONFIRM=1 SOLANA_NETWORK=mainnet ./scripts/deploy.sh   # mainnet requires the explicit gate
+```
+
+- `local` is **not** deployed through this script - `scripts/setup-local-validator.sh` loads
+  `contracts/target/deploy/magiclob.so` immutably (no `anchor deploy`).
+- Requires SOL for fees in `~/.config/solana/id.json` (it is the program's upgrade authority;
+  on a fresh deploy it simply funds rent + fees).
+- The deploy RPC is anchor's default per cluster; on 429s pin a private RPC in
+  `~/.config/solana/cli/config.yml` or `contracts/Anchor.toml`.
+- If upgrading an existing program: a fresh `anchor build` produces an unpadded `.so` while
+  the devnet account is padded to 900,000 bytes - the upgrade must not exceed that size.
+
+---
+
 ## Feature Coverage (MVP)
 
 * **Orders:** limit (GTC / IOC / FOK / PostOnly), market (IOC, no resting), cancel, modify (reduction-only, price-preserving), atomic batches (≤16).
