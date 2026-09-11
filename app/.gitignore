@@ -1,0 +1,15 @@
+.env.local
+.env*.local
+
+# Next.js
+.next/
+out/
+
+# Indexer + demo state written by scripts
+.indexer/
+.state/
+
+# Runtime
+node_modules/
+*.tsbuildinfo
+next-env.d.ts

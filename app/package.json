@@ -1,0 +1,44 @@
+{
+  "name": "magicbook",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "indexer": "node --import tsx scripts/indexer.ts",
+    "setup:market": "node --import tsx scripts/setup-demo-market.ts",
+    "seed:history": "node --import tsx scripts/seed-history.ts",
+    "dev:full": "concurrently -n app,indexer -c cyan,magenta \"npm run dev\" \"npm run indexer\""
+  },
+  "dependencies": {
+    "@magiclob/sdk": "file:../sdk",
+    "@solana/wallet-adapter-backpack": "^0.1.14",
+    "@solana/wallet-adapter-base": "^0.9.24",
+    "@solana/wallet-adapter-phantom": "^0.9.25",
+    "@solana/wallet-adapter-react": "^0.15.36",
+    "@solana/wallet-adapter-solflare": "^0.6.30",
+    "@solana/web3.js": "^1.98.0",
+    "lightweight-charts": "^4.2.0",
+    "lucide-react": "^1.44.0",
+    "next": "15.1.6",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
+  },
+  "devDependencies": {
+    "@solana/spl-token": "^0.4.9",
+    "@types/node": "^22.10.7",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "bigint-buffer@1.1.5": true
+  }
+}
