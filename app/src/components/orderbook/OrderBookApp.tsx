@@ -178,10 +178,10 @@ export function OrderBookApp() {
             <div className={`flex min-h-0 flex-col bg-[#0b1220] ${centerSpan}`}>
               {tapeOpen ? (
                 <>
-                  <div className="relative h-[300px] shrink-0 overflow-hidden">
+                  <div className="relative h-[38vh] min-h-[220px] shrink-0 overflow-hidden lg:h-auto lg:min-h-[160px] lg:flex-[1.4]">
                     <PriceChart candles={candles} symbol={pair.symbol} />
                   </div>
-                  <div className="h-[320px] min-h-0 shrink-0 border-t border-[#1b2335] lg:h-auto lg:min-h-[160px] lg:flex-1">
+                  <div className="flex h-[34vh] min-h-[160px] shrink-0 flex-col border-t border-[#1b2335] lg:h-auto lg:min-h-0 lg:flex-1">
                     <TradeTape
                       fills={fills}
                       quoteSymbol={pair.quote}
@@ -193,7 +193,7 @@ export function OrderBookApp() {
                 </>
               ) : (
                 <>
-                  <div className="relative min-h-0 flex-1 overflow-hidden">
+                  <div className="relative h-[52vh] min-h-[240px] shrink-0 overflow-hidden lg:h-auto lg:min-h-0 lg:flex-1">
                     <PriceChart candles={candles} symbol={pair.symbol} />
                   </div>
                   <button
@@ -277,10 +277,10 @@ function SideRail({ label, onExpand }: { label: string; onExpand: () => void }) 
       type="button"
       onClick={onExpand}
       title={`Expand ${label}`}
-      className="flex min-h-0 flex-1 flex-col items-center justify-center gap-3 text-slate-500 transition-colors hover:bg-white/[0.03] hover:text-violet-300"
+      className="flex h-10 w-full min-h-0 items-center justify-center gap-2 border-t border-[#1b2335] text-[11px] font-semibold uppercase tracking-widest text-slate-500 transition-colors hover:bg-white/[0.03] hover:text-violet-300 lg:h-auto lg:min-h-0 lg:flex-1 lg:flex-col lg:gap-3 lg:border-t-0"
     >
-      <ChevronRight className="h-4 w-4" />
-      <span className="rotate-90 whitespace-nowrap text-[11px] font-semibold uppercase tracking-wider">
+      <ChevronRight className="h-4 w-4 rotate-90 lg:rotate-0" />
+      <span className="whitespace-nowrap lg:rotate-90">
         {label}
       </span>
     </button>

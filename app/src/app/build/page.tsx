@@ -41,21 +41,29 @@ export default function BuildPage() {
   return (
     <main id="main" className="relative min-h-screen overflow-hidden bg-[#070b14] text-slate-200">
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-violet-600/15 blur-[140px]" />
+      <div className="pointer-events-none absolute left-0 top-1/3 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-indigo-600/10 blur-[120px]" />
+      <div className="pointer-events-none absolute right-[-200px] top-1/2 h-[500px] w-[500px] rounded-full bg-violet-500/10 blur-[150px]" />
 
       <SiteNav />
 
-      <section className="relative mx-auto max-w-4xl px-5 pb-16 pt-40">
-        <span className="rounded-full border border-white/10 bg-violet-600/10 px-3.5 py-1.5 font-mono text-xs font-semibold text-violet-400">
+      <section className="relative mx-auto max-w-4xl px-5 pb-16 pt-20 sm:pt-24 lg:pt-28">
+        <span className="animate-fade-in-up rounded-full border border-white/10 bg-violet-600/10 px-3.5 py-1.5 font-mono text-xs font-semibold text-violet-400">
           {site.name} · open infrastructure
         </span>
-        <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-50 sm:text-5xl">
-          Build on {site.name}
+        <h1 className="animate-fade-in-up mt-6 max-w-[18ch] text-3xl font-black leading-[1.04] tracking-tight text-slate-50 sm:text-4xl md:text-5xl lg:text-[4.4rem]">
+          <span className="[-webkit-text-stroke:1px_#f8fafc]">Build on{" "}</span>
+          <span className="bg-gradient-to-r from-[#9945FF] to-[#14F195] bg-clip-text text-transparent">
+            {site.name}
+          </span>
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-400 font-medium">
+        <p className="animate-fade-in-up mt-6 max-w-2xl text-lg leading-relaxed text-slate-400 font-medium">
           {site.name} is a Central Limit Order Book you can call: a shared,
           programmatically accessible matching backend that any DEX, algorithmic trader, or mobile app can integrate.
           It runs as a single Anchor program - already deployed on devnet and mainnet - and trades on the base
-          layer, with optional bursts through Magicblock Ephemeral Rollups.
+          layer, with optional bursts through{" "}
+          <span className="bg-gradient-to-r from-[#9945FF] to-[#14F195] bg-clip-text text-transparent">
+            Magicblock Ephemeral Rollups
+          </span>.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -63,7 +71,7 @@ export default function BuildPage() {
             href={site.links.github}
             target="_blank"
             rel="noreferrer"
-            className="group inline-flex items-center justify-center rounded-lg bg-violet-600 px-8 py-3.5 text-sm font-bold text-white transition-colors hover:bg-violet-500"
+            className="group inline-flex items-center justify-center rounded-lg bg-white px-8 py-3.5 text-sm font-bold text-slate-950 transition-colors hover:bg-slate-200"
           >
             View on GitHub
             <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" strokeWidth={2} />
@@ -89,6 +97,11 @@ export default function BuildPage() {
             {PROGRAM_ID}
           </a>
         </p>
+
+        <div
+          className="mx-auto mt-16 h-px w-full max-w-3xl bg-gradient-to-r from-transparent via-white/25 to-transparent"
+          aria-hidden="true"
+        />
       </section>
 
       <section className="relative mx-auto max-w-4xl px-5 py-12">
@@ -118,9 +131,29 @@ export default function BuildPage() {
             is the typed client for the program: a single dependency that resolves markets, builds and signs
             transactions, and reads the book and trade tape on local, devnet, or mainnet.
           </p>
-          <pre className="mt-6 overflow-x-auto rounded-2xl border border-white/10 bg-[#04060a] p-5 font-mono text-sm text-slate-300 shadow-inner">
-            {`npm install @magiclob/sdk`}
-          </pre>
+          <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-[#04060a]">
+            <div className="flex items-center gap-2 border-b border-white/5 bg-white/[0.03] px-4 py-3">
+              <span className="h-3 w-3 rounded-full bg-red-400/70" aria-hidden="true" />
+              <span className="h-3 w-3 rounded-full bg-amber-400/70" aria-hidden="true" />
+              <span className="h-3 w-3 rounded-full bg-emerald-400/70" aria-hidden="true" />
+              <span className="ml-3 font-mono text-xs text-slate-500">watch.mjs — node</span>
+            </div>
+            <pre className="overflow-x-auto p-5 font-mono text-sm leading-relaxed text-slate-300">
+              {`$ npm install @magiclob/sdk
+import MagiCLOBSDK from "@magiclob/sdk";
+import { PublicKey } from "@solana/web3.js";
+
+const clob = new MagiCLOBSDK({
+  connection: "https://rpc.magicblock.app/devnet",
+});
+const market = new PublicKey("FpdzkqtC9DqaLSPVVQ41FkVo57KFAboPZ9E95ZgCwbzd");
+
+const top = await clob.getTopOfBook(market);
+console.log(top.bestBid, top.bestAsk, top.spread);
+
+✓ best bid / best ask · straight off the on-chain book`}
+            </pre>
+          </div>
           <ul className="mt-8 grid gap-4 sm:grid-cols-2">
             {SDK_FEATURES.map((f) => (
               <li key={f} className="flex items-start gap-3 text-sm text-slate-300 font-medium">

@@ -19,15 +19,7 @@ export function OpenOrders({ meta, onMinimize }: { meta: MarketMeta; onMinimize?
   const [busyId, setBusyId] = useState<string | null>(null);
   const orders = useOpenOrders(sdk, market, auth.publicKey, layer, nonce);
 
-  if (!auth.publicKey) {
-    return (
-      <Panel>
-        <EmptyHint text="Connect a wallet to manage your orders." />
-      </Panel>
-    );
-  }
-
-  const act = async (
+const act = async (
     id: string,
     fn: () => Promise<string>
   ) => {
@@ -74,8 +66,12 @@ export function OpenOrders({ meta, onMinimize }: { meta: MarketMeta; onMinimize?
         <span />
       </div>
       <div className="max-h-56 min-h-0 flex-1 overflow-y-auto">
-        {orders.length === 0 && <EmptyHint text="No open orders. Place one above." />}
-        {orders.map((o) => {
+        {!auth.publicKey ? (
+          <EmptyHint text="Connect a wallet to manage your orders." />
+        ) : orders.length === 0 ? (
+          <EmptyHint text="No open orders. Place one above." />
+        ) : (
+          orders.map((o) => {
           const key = `${o.side}-${o.clientOrderId.toString()}`;
           const isBid = o.side === OrderSide.Bid;
           const lot = meta.state.lotSize;
@@ -134,7 +130,8 @@ export function OpenOrders({ meta, onMinimize }: { meta: MarketMeta; onMinimize?
               </span>
             </div>
           );
-        })}
+          })
+        )}
       </div>
     </Panel>
   );

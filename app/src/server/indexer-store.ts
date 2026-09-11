@@ -6,12 +6,18 @@
  *
  * The in-app indexer (`src/server/indexer.ts`, bootstrapped by the server) is
  * the only writer; API routes are read-only. Everything lives under
- * `<app>/.indexer/<network>/<market>/` so no network ever pollutes another.
+ * `<root>/<network>/<market>/` so no network ever pollutes another.
  * Missing files are legitimate (market or indexer not running yet) and read as
  * empty collections, never as an error.
+ *
+ * On a read-only filesystem (e.g. Vercel Serverless) the store falls back to
+ * `os.tmpdir()` — ephemeral per cold-start but at least prevents the
+ * `ENOENT: mkdir` crash that kills the candles and tape APIs.
  */
+import { mkdirSync } from "node:fs";
 import { mkdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { tmpdir } from "node:os";
 
 export interface Candle {
   /** Bucket start, epoch ms. */
@@ -42,7 +48,20 @@ export interface MarketMeta {
   quoteMint: string;
 }
 
-const ROOT = join(process.cwd(), ".indexer");
+function pickRoot(): string {
+  if (process.env.INDEXER_DIR) return process.env.INDEXER_DIR;
+  const defaultPath = join(process.cwd(), ".indexer");
+  try {
+    mkdirSync(defaultPath, { recursive: true });
+    return defaultPath;
+  } catch {
+    const fallback = join(tmpdir(), "magiclob-indexer");
+    mkdirSync(fallback, { recursive: true });
+    return fallback;
+  }
+}
+
+const ROOT = pickRoot();
 
 export function indexerRoot(): string {
   return ROOT;
