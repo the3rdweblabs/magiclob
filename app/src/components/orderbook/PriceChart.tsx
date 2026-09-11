@@ -4,8 +4,11 @@
 "use client";
 
 import {
+  CandlestickSeries,
   ColorType,
+  HistogramSeries,
   createChart,
+  createTextWatermark,
   type IChartApi,
   type IPriceLine,
   type ISeriesApi,
@@ -70,18 +73,21 @@ export function PriceChart({ candles, symbol }: { candles: Candle[]; symbol?: st
         vertLine: { color: "#475569", labelBackgroundColor: "#334155" },
         horzLine: { color: "#475569", labelBackgroundColor: "#334155" },
       },
-      watermark: {
-        visible: true,
-        text: "magiCLOB",
-        color: "rgba(148, 163, 184, 0.1)",
-        fontSize: 24,
-        fontFamily: "'Geist Mono', ui-monospace, Menlo, monospace",
-        horzAlign: "left",
-        vertAlign: "bottom",
-      },
     });
 
-    const series = chart.addCandlestickSeries({
+    createTextWatermark(chart.panes()[0], {
+      horzAlign: "left",
+      vertAlign: "bottom",
+      lines: [
+        {
+          text: "magiCLOB",
+          color: "rgba(148, 163, 184, 0.1)",
+          fontSize: 24,
+        },
+      ],
+    });
+
+    const series = chart.addSeries(CandlestickSeries, {
       upColor: UP,
       downColor: DOWN,
       borderUpColor: UP,
@@ -91,7 +97,7 @@ export function PriceChart({ candles, symbol }: { candles: Candle[]; symbol?: st
       priceFormat: { type: "price", precision: 4, minMove: 0.0001 },
     });
 
-    const volume = chart.addHistogramSeries({
+    const volume = chart.addSeries(HistogramSeries, {
       priceScaleId: "volume",
       priceFormat: { type: "volume" },
     });

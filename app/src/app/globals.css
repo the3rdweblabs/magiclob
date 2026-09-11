@@ -1,6 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-panel: #0b1220;
+  --color-edge: #1b2335;
+}
 
 :root {
   --bg: #060a12;
