@@ -11,7 +11,7 @@ import { Connection } from "@solana/web3.js";
 
 // Base-layer client - every call lands on the base validator (see status note
 // below about the Ephemeral Rollup path, which is not yet operational).
-const sdk = new MagiCLOBSDK({ connection: new Connection("https://api.devnet.solana.com") });
+const sdk = new MagiCLOBSDK({ connection: new Connection("https://rpc.magicblock.app/devnet") });
 const addresses = sdk.addresses(baseMint, quoteMint);
 
 await sdk.initializeMarket(

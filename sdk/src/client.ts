@@ -23,7 +23,7 @@ import {
   TransactionInstruction,
   TransactionSignature,
 } from "@solana/web3.js";
-import { ENDPOINTS, MAGICLOB_PROGRAM_ID } from "./constants";
+import { ENDPOINTS, MAGICLOB_PROGRAM_ID, RPC_FAILOVERS } from "./constants";
 import { rethrowMagiCLOBError } from "./errors";
 
 /** Which layer a transaction or read should be routed to. */
@@ -44,11 +44,108 @@ export interface MagiCLOBClientOptions {
   commitment?: Commitment;
 }
 
+/**
+ * Wrap one or more RPC endpoint URLs in a single `Connection` that rotates to
+ * the next endpoint when the active one rate-limits (HTTP 429) or fails at the
+ * network layer. WebSocket/pubsub subscriptions stay pinned to the first
+ * endpoint so long-lived subscriptions survive a rotation. All endpoints are
+ * public and keyless (see `RPC_FAILOVERS`).
+ */
+export function failoverConnection(
+  endpoints: readonly string[],
+  commitment: Commitment
+): Connection {
+  if (endpoints.length === 0) {
+    throw new Error("magiCLOB: no RPC endpoints to failover");
+  }
+  const conns = endpoints.map((endpoint) => new Connection(endpoint, commitment));
+  let index = 0;
+  const isRetryable = (err: unknown): boolean =>
+    /429|503|502|rate.?limit|fetch failed|ECONN|ETIMEDOUT|socket hang up/i.test(
+      err instanceof Error ? err.message : String(err)
+    );
+  const invoke = (
+    prop: PropertyKey,
+    args: unknown[],
+    attempts: number
+  ): unknown => {
+    for (let i = 0; i < conns.length; i += 1) {
+      const conn = conns[index];
+      const fn = Reflect.get(conn, prop, conn) as (...a: unknown[]) => unknown;
+      try {
+        const result = Reflect.apply(fn, conn, args);
+        if (result && typeof (result as Promise<unknown>).then === "function") {
+          return (result as Promise<unknown>).then(
+            (value) => value,
+            (err: unknown) => {
+              if (!isRetryable(err) || attempts <= 1) throw err;
+              index = (index + 1) % conns.length;
+              return invoke(prop, args, attempts - 1);
+            }
+          );
+        }
+        return result;
+      } catch (err) {
+        if (!isRetryable(err)) throw err;
+        index = (index + 1) % conns.length;
+      }
+    }
+    throw new Error(
+      `magiCLOB: all ${conns.length} RPC endpoints failed for ${String(prop)}`
+    );
+  };
+  return new Proxy(conns[0], {
+    get(target, prop, receiver) {
+      if (prop === "then") return undefined;
+      const conn = conns[index];
+      const value = Reflect.get(conn, prop, conn);
+      if (typeof value === "function") {
+        return (...args: unknown[]) => invoke(prop, args, conns.length);
+      }
+      return value;
+    },
+  });
+}
+
+/** Known networks whose default RPC carries a failover list. */
+function failoverEndpointsFor(value: string): string[] {
+  if (value === ENDPOINTS.devnetBase) return [value, ...RPC_FAILOVERS.devnet];
+  if (value === ENDPOINTS.mainnetBase) return [value, ...RPC_FAILOVERS.mainnet];
+  return [value];
+}
+
 function toConnection(
   value: Connection | string,
   commitment: Commitment
 ): Connection {
-  return typeof value === "string" ? new Connection(value, commitment) : value;
+  if (typeof value !== "string") return value;
+  const endpoints = failoverEndpointsFor(value);
+  if (endpoints.length === 1) return new Connection(value, commitment);
+  return failoverConnection(endpoints, commitment);
+}
+
+/**
+ * Reused `latestBlockhash` per endpoint so a burst of sends (market maker
+ * cycles, API-driven orders) does not hammer `getLatestBlockhash` on every
+ * transaction. A Solana blockhash stays valid for ~150 slots (≈60s on devnet),
+ * so a 10s cache is safe.
+ */
+const BLOCKHASH_TTL_MS = 10_000;
+const blockhashCache = new Map<string, { blockhash: string; at: number }>();
+
+async function cachedBlockhash(connection: Connection): Promise<string> {
+  const key = String(
+    (connection as unknown as { _rpcEndpoint?: string })._rpcEndpoint ??
+      "connection"
+  );
+  const cached = blockhashCache.get(key);
+  if (cached && Date.now() - cached.at < BLOCKHASH_TTL_MS) {
+    return cached.blockhash;
+  }
+  const latest = await connection.getLatestBlockhash();
+  const blockhash = latest.blockhash;
+  blockhashCache.set(key, { blockhash, at: Date.now() });
+  return blockhash;
 }
 
 /**
@@ -134,9 +231,7 @@ export class MagiCLOBClient {
     const connection = this.connectionFor(layer);
     const tx = new Transaction().add(...instructions);
     tx.feePayer = feePayer ?? signers[0].publicKey;
-
-    const { blockhash } = await connection.getLatestBlockhash(this.commitment);
-    tx.recentBlockhash = blockhash;
+    tx.recentBlockhash = await cachedBlockhash(connection);
 
     try {
       tx.sign(...signers);

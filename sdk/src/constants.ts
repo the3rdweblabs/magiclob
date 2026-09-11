@@ -68,13 +68,51 @@ export const MAX_BATCH_SIZE = 16;
 /** Linked-list sentinel used by the on-chain book (`NONE_IDX`). */
 export const NONE_IDX = 0xffff;
 
-/** Public Magicblock RPC endpoints. */
+/**
+ * Public, keyless Solana RPC endpoints.
+ *
+ * MagicBlock endpoints are the default (no API key required; they serve the
+ * shared devnet/mainnet clusters). The regional/devnet-suffixed endpoints are
+ * used as automatic failover when the primary rate-limits (HTTP 429), and the
+ * Solana-foundation public pool is the last resort. `MagiCLOBClient` rotates
+ * through these on transient failures via `failoverConnection`.
+ */
 export const ENDPOINTS = {
-  devnetBase: "https://api.devnet.solana.com",
+  devnetBase: "https://rpc.magicblock.app/devnet",
+  devnetWs: "wss://rpc.magicblock.app/devnet",
+  devnetUs: "https://devnet-us.magicblock.app/",
+  devnetAsia: "https://devnet-as.magicblock.app/",
+  devnetEu: "https://devnet-eu.magicblock.app/",
+  devnetPublic: "https://api.devnet.solana.com",
   devnetRouter: "https://devnet-router.magicblock.app",
-  mainnetBase: "https://api.mainnet-beta.solana.com",
+  mainnetBase: "https://rpc.magicblock.app/mainnet",
+  mainnetWs: "wss://rpc.magicblock.app/mainnet",
+  mainnetUs: "https://us.magicblock.app/",
+  mainnetAsia: "https://as.magicblock.app/",
+  mainnetEu: "https://eu.magicblock.app/",
+  mainnetPublic: "https://api.mainnet-beta.solana.com",
   mainnetRouter: "https://router.magicblock.app",
 } as const;
+
+/**
+ * Ordered failover list per network. Every entry is public and keyless. The
+ * public Solana pool is intentionally last so the shared quota is only touched
+ * after every MagicBlock endpoint has been exhausted.
+ */
+export const RPC_FAILOVERS = {
+  devnet: [
+    ENDPOINTS.devnetUs,
+    ENDPOINTS.devnetAsia,
+    ENDPOINTS.devnetEu,
+    ENDPOINTS.devnetPublic,
+  ],
+  mainnet: [
+    ENDPOINTS.mainnetUs,
+    ENDPOINTS.mainnetAsia,
+    ENDPOINTS.mainnetEu,
+    ENDPOINTS.mainnetPublic,
+  ],
+} as const satisfies Record<"devnet" | "mainnet", readonly string[]>;
 
 /**
  * Sentinel for "this order never expires".
