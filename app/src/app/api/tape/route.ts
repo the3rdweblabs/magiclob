@@ -2,14 +2,12 @@
 // Copyright (c) 2026 THE3RDWEBLABS (https://github.com/the3rdweblabs)
 
 import { resolveNetworkConfig } from "@/config/networks";
-import { readMeta, readTape } from "@/server/indexer-store";
-import { ensureIndexer } from "@/server/indexer";
+import { loadMarketHistory } from "@/server/onchain-history";
 
 export const dynamic = "force-dynamic";
 
-/** Latest fills for a pair, from the indexer store. */
+/** Latest fills for a pair, read straight from on-chain trade events. */
 export async function GET(req: Request) {
-  ensureIndexer();
   const { searchParams } = new URL(req.url);
   const symbol = searchParams.get("pair") ?? "";
   const limit = Math.max(1, Math.min(200, Number(searchParams.get("limit") ?? 40)));
@@ -21,9 +19,6 @@ export async function GET(req: Request) {
       { status: 404 }
     );
   }
-  const [fills, meta] = await Promise.all([
-    readTape(cfg.network, pair.market, limit),
-    readMeta(cfg.network, pair.market),
-  ]);
-  return Response.json({ pair: symbol, meta, fills });
+  const { tape } = await loadMarketHistory(cfg.network, pair.market);
+  return Response.json({ pair: symbol, fills: tape.slice(0, limit) });
 }

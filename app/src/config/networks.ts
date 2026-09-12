@@ -74,12 +74,12 @@ const PAIR_DEFAULTS: Record<Network, Array<Pick<NetworkPair, "symbol" | "base" |
     { symbol: "MAGIC/USDC", base: "MAGIC", quote: "USDC" },
   ],
   devnet: [
-    { symbol: "SOL/USDC", base: "SOL", quote: "USDC" },
     { symbol: "MAGIC/USDC", base: "MAGIC", quote: "USDC" },
+    { symbol: "SOL/USDC", base: "SOL", quote: "USDC" },
   ],
   mainnet: [
-    { symbol: "SOL/USDC", base: "SOL", quote: "USDC" },
     { symbol: "MAGIC/USDC", base: "MAGIC", quote: "USDC" },
+    { symbol: "SOL/USDC", base: "SOL", quote: "USDC" },
   ],
 };
 

@@ -2,15 +2,13 @@
 // Copyright (c) 2026 THE3RDWEBLABS (https://github.com/the3rdweblabs)
 
 import { resolveNetworkConfig } from "@/config/networks";
-import { readCandles, readMeta } from "@/server/indexer-store";
-import { ensureIndexer } from "@/server/indexer";
 import { ensureMarketMaker } from "@/server/market-maker";
+import { loadMarketHistory } from "@/server/onchain-history";
 
 export const dynamic = "force-dynamic";
 
-/** 1m candles for a pair, from the indexer store. */
+/** 1m candles for a pair, aggregated straight from on-chain trade events. */
 export async function GET(req: Request) {
-  ensureIndexer();
   ensureMarketMaker();
   const { searchParams } = new URL(req.url);
   const symbol = searchParams.get("pair") ?? "";
@@ -22,9 +20,6 @@ export async function GET(req: Request) {
       { status: 404 }
     );
   }
-  const [candles, meta] = await Promise.all([
-    readCandles(cfg.network, pair.market),
-    readMeta(cfg.network, pair.market),
-  ]);
-  return Response.json({ pair: symbol, meta, candles });
+  const { candles } = await loadMarketHistory(cfg.network, pair.market);
+  return Response.json({ pair: symbol, candles });
 }
