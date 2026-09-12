@@ -61,12 +61,12 @@ function takerOf(tx: { transaction?: { message?: { staticAccountKeys?: unknown[]
 }
 
 const sweepDepth = (): number => {
-  const raw = Number(process.env.HISTORY_DEPTH ?? 150);
-  return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 1000;
+  const raw = Number(process.env.HISTORY_DEPTH ?? 0);
+  return Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 0;
 };
 
-const HISTORY_TTL_MS = Number(process.env.HISTORY_TTL_MS ?? 45_000);
-const CONCURRENCY = Number(process.env.HISTORY_CONCURRENCY ?? 6);
+const HISTORY_TTL_MS = Number(process.env.HISTORY_TTL_MS ?? 300_000);
+const CONCURRENCY = Number(process.env.HISTORY_CONCURRENCY ?? 12);
 
 const caches = new Map<string, HistoryCache>();
 const sweepingNow = new Map<string, Promise<boolean>>();
@@ -119,15 +119,26 @@ async function sweepMarket(network: Network, marketAddress: string): Promise<boo
   const sdk = new MagiCLOBSDK(client);
   const market = new PublicKey(marketAddress);
   const depth = sweepDepth();
+  const pageSize = depth > 0 && depth < 1000 ? depth : 1000;
 
   let signatures: string[] = [];
   try {
-    const list = await client.connection.getSignaturesForAddress(
-      market,
-      depth > 0 ? { limit: depth } : undefined,
-      "confirmed"
-    );
-    signatures = (Array.isArray(list) ? list : []).map((s) => s.signature).reverse();
+    let before: string | undefined;
+    for (;;) {
+      const list = await client.connection.getSignaturesForAddress(
+        market,
+        { limit: pageSize, before },
+        "confirmed"
+      );
+      signatures = signatures.concat(list.map((s) => s.signature));
+      if (depth > 0 && signatures.length >= depth) {
+        signatures.length = depth;
+        break;
+      }
+      if (list.length < 1000) break;
+      before = list[list.length - 1].signature;
+    }
+    signatures.reverse();
   } catch (err) {
     console.warn(
       `[onchain-history] signatures for ${marketAddress} unavailable:`,
